@@ -1,0 +1,1 @@
+pyinstaller -D FastInsert.spec

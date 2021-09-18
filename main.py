@@ -7,7 +7,7 @@ from pprint import pprint
 import datetime
 renderTextRegion = None
 IsStartWorker = False
-
+IGNORE_FILE_NAME = ['desktop.ini']
 def renderText(text):
     if renderTextRegion:
         curTime = datetime.datetime.now().strftime("%H:%M:%S:")
@@ -38,10 +38,18 @@ def TaskWorker():
 def MoveFileTask():
     import shutil
     import os
-    pprint(os.listdir("/Users/ee303/Dropbox/Camera Uploads/"))
-    for files in os.listdir("/Users/ee303/Dropbox/Camera Uploads/"):
-        source = r'/Users/ee303/Dropbox/Camera Uploads/{}'.format(files)
-        destination = r'/Users/ee303/Downloads/照片備份/{}'.format(files)
+    sourceDirPath = r"C:\Users\s8704\Dropbox\Camera Uploads"
+    dstDirPath = r"D:\Dropbox照片備份"
+    Allfiles = os.listdir(sourceDirPath)
+    if len(Allfiles) -1 > 0:
+        renderText(f"Find {len(Allfiles)} files")
+    time.sleep(10)
+
+    for files in Allfiles:
+        if files in IGNORE_FILE_NAME:
+            continue
+        source = os.path.join(sourceDirPath, files)
+        destination = os.path.join(dstDirPath, files)
         shutil.move(source, destination)
         renderText(f"Move file {source} to {destination}")
 
